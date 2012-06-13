@@ -1,0 +1,4 @@
+easelgame
+=========
+
+EaselJS game demo
