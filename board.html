@@ -67,15 +67,22 @@
 		stage.addChild(container);
 		for (i=0; i <= boardsize; i++) {
 			for (j=0; j < boardsize; j++) {
-				bitmap = new Bitmap(image)
-				container.addChild(bitmap)
-				bitmap.x = canvas.width - (i*74);
-				bitmap.y = (canvas.height -118) - (j*59);
-				bitmap.name = "gridbmp_"+i+"_"+j;
+				xvar = canvas.width - (i*74);
+				yvar = (canvas.height - 118) - (j*59);
+				bmpname = "gridbmp_"+i+"_"+j;
+				placeBmp(container, image, xvar, yvar, bmpname);
 			}
 		}
                 document.getElementById("loader").className = "";
                 Ticker.addListener(window);
+	}
+	
+	function placeBmp(container, image, xvar, yvar, bmpname) {
+		bitmap = new Bitmap(image);
+		container.addChild(bitmap);
+		bitmap.x = xvar;
+		bitmap.y = yvar;
+		bitmap.name = bmpname;
 	}
 
 	function tick() {
