@@ -52,20 +52,20 @@
 		//load the board
 		var bluesquare = new Image();
                 bluesquare.src = "assets/backsquareblue.png";
-		bluesquare.onload = function() {
-			drawBmp('board');
+		bluesquare.onload = function(event) {
+			drawBmp(event, 'board');
 			document.getElementById("loader").className = "";
 			Ticker.addListener(window);
 		};
 		var redsquare = new Image();
 		redsquare.src = "assets/backsquarered.png";
-		redsquare.onload = function() {
-			drawBmp('deck');
+		redsquare.onload = function(event) {
+			drawBmp(event,'deck');
 		};
 		var star = new Image();
 		star.src = "assets/star.png";
-		star.onload = function() {
-			drawBmp('star');
+		star.onload = function(event) {
+			drawBmp(event, 'star');
 		};
 
 	}
@@ -80,7 +80,7 @@
 		} catch(e) {}
 	}
 		
-	function drawBmp(bmptype) {
+	function drawBmp(event, bmptype) {
 		var image = event.target;
 		var bitmap;
 		var container = new Container();
