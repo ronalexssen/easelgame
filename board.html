@@ -52,31 +52,56 @@
 		//load the board
 		var bluesquare = new Image();
                 bluesquare.src = "assets/backsquareblue.png";
-		bluesquare.onload = drawBoard;
+		bluesquare.onload = function() {
+			drawBmp('board');
+			document.getElementById("loader").className = "";
+			Ticker.addListener(window);
+		};
+		var redsquare = new Image();
+		redsquare.src = "assets/backsquarered.png";
+		redsquare.onload = function() {
+			drawBmp('deck');
+		};
 
 	}
 
 	function stop() {
 		Ticker.removeListener(window);
 	}
-
-	function  drawBoard() {
+	
+	function mylog(msg) {
+		try {
+			console.log(msg);
+		} catch(e) {}
+	}
+		
+	function drawBmp(bmptype) {
 		var image = event.target;
 		var bitmap;
 		var container = new Container();
 		stage.addChild(container);
-		for (i=0; i <= boardsize; i++) {
-			for (j=0; j < boardsize; j++) {
-				xvar = canvas.width - (i*74);
-				yvar = (canvas.height - 118) - (j*59);
-				bmpname = "gridbmp_"+i+"_"+j;
-				placeBmp(container, image, xvar, yvar, bmpname);
-			}
+		switch(bmptype) {
+			case 'board':
+				for (i=0; i <= boardsize; i++) {
+                 		       for (j=0; j < boardsize; j++) {
+		                                xvar = canvas.width - (i*74);
+		                                yvar = (canvas.height - 118) - (j*59);
+		                                bmpname = "gridbmp_"+i+"_"+j;
+		                                placeBmp(container, image, xvar, yvar, bmpname);
+		                        }
+		                }
+			break;
+			case 'deck':
+				for(i=0; i <= boardsize; i++) {
+					xvar = canvas.width - (i*74);
+					yvar = canvas.height - 59;
+					bmpname = "deckbmp_"+i;
+					placeBmp(container, image, xvar, yvar, bmpname);
+				}
+			break;
 		}
-                document.getElementById("loader").className = "";
-                Ticker.addListener(window);
 	}
-	
+
 	function placeBmp(container, image, xvar, yvar, bmpname) {
 		bitmap = new Bitmap(image);
 		container.addChild(bitmap);
