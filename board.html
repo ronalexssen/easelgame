@@ -127,8 +127,8 @@
 						}
 						bitmap.onMouseOut = function() {
 							target.scaleX = target.scaleY = target.scale * 1;
-							target.x = Math.round(target.x / 74) * 74;
-							target.y = Math.round(target.y / 59) * 59;
+							target.x = checkWideBound(Math.round(target.x / 74) * 74);
+							target.y = checkHeightBound(Math.round(target.y / 59) * 59);
 							update = true;
 						}
 					})(bitmap);
@@ -146,6 +146,14 @@
 		return bitmap;
 	}
 
+	function checkWideBound(xvar) {
+		if (xvar > (canvas.width-74)) { xvar = canvas.width-74;}
+		return xvar;
+	}
+	function checkHeightBound(yvar) {
+		if (yvar > (canvas.height-59)) { yvar = canvas.height-59;}
+		return yvar;
+	}
 	function tick() {
 		// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
 		if (update) {
