@@ -28,6 +28,7 @@
 	var dragStarted;	// indicates whether we are currently in a drag operation
 	var offset = new Point();
 	var update = true;
+	var boardPieces = new Array(); //array to hold piece locations
 
 	var boardsize = 4;
 	
@@ -109,6 +110,7 @@
 					xvar = canvas.width - (i*74);
 					yvar = canvas.height - 59;
 					bmpname = "starbmp_" + i;
+					boardPieces[i] = new boardPiece(xvar, yvar, bmpname);
 					bitmap = placeBmp(container, image, xvar, yvar, bmpname);
 					bitmap.scaleX = bitmap.scaleY = bitmap.scale = 1;
 					(function(target){
@@ -118,6 +120,7 @@
 							evt.onMouseMove = function(ev) {
 								target.x = ev.stageX + offset.x;
 								target.y = ev.stageY + offset.y;
+								//mylog("xvar:" + xvar + " -- yvar:" + yvar + " -- target.x:" + target.x + " -- target.y:" + target.y)
 								update = true;
 							}
 						}
@@ -143,6 +146,7 @@
 		bitmap.x = xvar;
 		bitmap.y = yvar;
 		bitmap.name = bmpname;
+		
 		return bitmap;
 	}
 
@@ -154,6 +158,25 @@
 		if (yvar > (canvas.height-59)) { yvar = canvas.height-59;}
 		return yvar;
 	}
+
+	function boardPiece(xvar, yvar, bmpname) {
+		this.width = 74;
+		this.height = 59;
+		this.x = xvar;
+		this.y = yvar;
+		this.prevX = xvar;
+		this.prevY = yvar;
+		this.name = bmpname;
+		//this.image = image;
+		this.collision = false;
+	}
+	this.checkLanding = function(obj) {
+		//need to figure out how to check collision
+		// if (xvar.occupied && yvar.occupied) { collision = true } else { collision = false}
+		if ((this.x < (obj.x + obj.width -1) && Math.floor(this.x + this.width -1) > obj.x) && (this.y < obj.y + obj.height -1) && Math.floor(this.y + this.height -1) > obj.y) { collision = true } else { collision = false }
+		return collision;
+	}
+
 	function tick() {
 		// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
 		if (update) {
